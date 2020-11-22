@@ -10,24 +10,19 @@ public static void main(String args[]){
     double priority[] = new double[numberOfQueues - 1];
 
     System.out.println("Введите количество элементов приоритетной очереди.");
-    //создаем приоритетную очередь
     Queue priorityQueue = new Queue();
     int numberOfElements = scan.nextInt();
-    System.out.println("Введите элементы приоритетной очереди");
-    for(int i = 0; i < numberOfElements; i ++){
-        priorityQueue.push(scan.nextInt());
-    }
-    //создаем взвешанные очереди
+    priorityQueue.add(numberOfElements,0);
+
     Queue wheighedQueues[] = new Queue[numberOfQueues - 1];
-    //prioritySum - сумма долей взвешенных очередей
     double prioritySum = 0;
-    //если кол-во очередей=1, то взешенные очереди создаваться не будут
+
+    //если кол-во очередей = 1 , то взешенные очереди создаваться не будут
     if (numberOfQueues > 1) {
 
         Scanner s = new Scanner(System.in);
-        //ввод данных взвешенных оередей
         for (int i = 0; i < numberOfQueues - 1; i++) {
-            System.out.println("Введите приоритет " + (i + 1) + " взвешенной очереди.");
+            System.out.println("Введите вес " + (i + 1) + " взвешенной очереди.");
             priority[i] = s.nextDouble();
             prioritySum += priority[i];
             System.out.println("Ведите количество ее элементов.");
@@ -35,21 +30,18 @@ public static void main(String args[]){
             wheighedQueues[i].add(scan.nextInt(),(i + 1));
         }
     }
-    //сначала выведем элементы приоритетной очереди
-    //в этом цикле выводятся элементы только в том случае, если элементы приоритетной очереди
-    //полностью покрывают пропускную спосоность
+
     for (int i = 0; i < (priorityQueue.size / capacity); ) {
         System.out.print("Элементы приоритетной очереди:");
-        priorityQueue.showMax(capacity);
+        priorityQueue.show(capacity);
         System.out.println();
     }
-    //если не вывелись все элементы приоритетной очереди, т. е. осталось такое кол-во,
-    //которое не покрываает пропускную способность,
-    //то выводятся сначала элементы приоритетной очерели, потом из взвешенных
+
+    //если остался остаток
     if (priorityQueue.size != 0) {
         int cap = capacity - priorityQueue.size;
         System.out.print("Элементы приоритетной очереди: ");
-        priorityQueue.showMax(priorityQueue.size);
+        priorityQueue.show(priorityQueue.size);
         System.out.println();
         System.out.println("Элементы взвешенных очередей: ");
         showWeighedQueues(wheighedQueues, priority, prioritySum, cap);
